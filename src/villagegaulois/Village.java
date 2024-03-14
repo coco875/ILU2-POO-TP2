@@ -113,6 +113,10 @@ public class Village {
 	public String[] donnerEtatMarche() {
 		return marche.donnerEtat();
 	}
+	
+	public Etal[] trouverVendeurProduit(String produit) {
+		return marche.trouverEtals(produit);
+	}
 
 	////////////////////// Classe Interne ///////////////////////
 	private static class Marche {

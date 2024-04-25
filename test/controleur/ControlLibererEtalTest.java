@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import personnages.Chef;
+import personnages.Gaulois;
+import villagegaulois.Village;
+
 class ControlLibererEtalTest {
 	private Village village;
 	private ControlTrouverEtalVendeur controlTrouverEtalVendeur;
@@ -13,6 +17,8 @@ class ControlLibererEtalTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		village = new Village("test", 1, 1);
+		Chef chef = new Chef("chef", 1, village);
+		village.setChef(chef);
 		controlTrouverEtalVendeur = new ControlTrouverEtalVendeur(village);
 		controlLibererEtal = new ControlLibererEtal(controlTrouverEtalVendeur);
 	}
@@ -25,7 +31,7 @@ class ControlLibererEtalTest {
 	@Test
 	void testIsVendeur() {
 		assertFalse(controlLibererEtal.isVendeur("personne"));
-		Gaulois personne = new Gaulois("personne", 0);
+		Gaulois personne = new Gaulois("personne", 1);
 		village.ajouterHabitant(personne);
 		village.installerVendeur(personne, "testing", 10);
 		assertTrue(controlLibererEtal.isVendeur("personne"));
@@ -34,7 +40,7 @@ class ControlLibererEtalTest {
 	@Test
 	void testLibererEtal() {
 		assertFalse(controlLibererEtal.isVendeur("personne"));
-		Gaulois personne = new Gaulois("personne", 0);
+		Gaulois personne = new Gaulois("personne", 1);
 		village.ajouterHabitant(personne);
 		village.installerVendeur(personne, "testing", 10);
 		assertTrue(controlLibererEtal.isVendeur("personne"));

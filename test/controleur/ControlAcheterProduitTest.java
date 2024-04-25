@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import personnages.Chef;
 import personnages.Gaulois;
 import villagegaulois.Village;
 
@@ -17,6 +18,8 @@ class ControlAcheterProduitTest {
 	@BeforeEach
 	void setUp() {
 		village = new Village("test", 1, 1);
+		Chef chef = new Chef("chef", 1, village);
+		village.setChef(chef);
 		controlTrouverEtalVendeur = new ControlTrouverEtalVendeur(village);
 		controlVerifierIdentite = new ControlVerifierIdentite(village);
 		controlAcheterProduit = new ControlAcheterProduit(controlVerifierIdentite, controlTrouverEtalVendeur, village);
@@ -29,15 +32,15 @@ class ControlAcheterProduitTest {
 	
 	@Test
 	void testVerifierIdentite() {
-		Gaulois personne = new Gaulois("personne", 0);
+		assertFalse(controlAcheterProduit.verifierIdentite("personne"));
+		Gaulois personne = new Gaulois("personne", 1);
 		village.ajouterHabitant(personne);
-		assertFalse(controlAcheterProduit.verifierIdentite(""));
 		assertTrue(controlAcheterProduit.verifierIdentite("personne"));
 	}
 	
 	@Test
 	void testTrouverVendeurProduit() {
-		Gaulois personne = new Gaulois("personne", 0);
+		Gaulois personne = new Gaulois("personne", 1);
 		village.ajouterHabitant(personne);
 		village.installerVendeur(personne, "testing", 10);
 		assertEquals(controlAcheterProduit.trouverVendeurProduit("testing").length, 1);
@@ -46,10 +49,10 @@ class ControlAcheterProduitTest {
 	
 	@Test
 	void testTrouverAcheterProduit() {
-		Gaulois personne = new Gaulois("personne", 0);
+		Gaulois personne = new Gaulois("personne", 1);
 		village.ajouterHabitant(personne);
 		village.installerVendeur(personne, "testing", 10);
-		assertEquals(controlAcheterProduit.trouverAcheterProduit(5,"testing"), 5);
+		assertEquals(controlAcheterProduit.trouverAcheterProduit(5,"personne"), 5);
 		assertEquals(controlAcheterProduit.trouverAcheterProduit(0,"nothing"), 0);
 	}
 

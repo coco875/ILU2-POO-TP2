@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import personnages.Chef;
+import personnages.Gaulois;
+import villagegaulois.Village;
+
 class ControlAfficherVillageTest {
 	private Village village;
 	private ControlAfficherVillage controlAfficherVillage;
@@ -12,6 +16,8 @@ class ControlAfficherVillageTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		village = new Village("test", 1, 1);
+		Chef chef = new Chef("chef", 1, village);
+		village.setChef(chef);
 		controlAfficherVillage = new ControlAfficherVillage(village);
 	}
 
@@ -22,10 +28,10 @@ class ControlAfficherVillageTest {
 
 	@Test
 	void testDonnerNomsVillageois() {
-		assertEquals(controlAfficherVillage.donnerNomsVillageois().length, 0);
-		Gaulois personne = new Gaulois("personne", 0);
-		village.ajouterHabitant(personne);
 		assertEquals(controlAfficherVillage.donnerNomsVillageois().length, 1);
+		Gaulois personne = new Gaulois("personne", 1);
+		village.ajouterHabitant(personne);
+		assertEquals(controlAfficherVillage.donnerNomsVillageois().length, 2);
 	}
 
 	@Test
@@ -35,8 +41,6 @@ class ControlAfficherVillageTest {
 
 	@Test
 	void testDonnerNbEtals() {
-		assertEquals(controlAfficherVillage.donnerNbEtals(), 0);
-		village.installerVendeur(new Gaulois("personne", 0), "testing", 10);
 		assertEquals(controlAfficherVillage.donnerNbEtals(), 1);
 	}
 

@@ -21,6 +21,9 @@ public class ControlAcheterProduit {
 
 	public String[] trouverVendeurProduit(String produit) {
 		Etal[] etalsVendeurProduit = village.trouverVendeurProduit(produit);
+		if (etalsVendeurProduit==null) {
+			return new String[0];
+		}
 		String[] NomVendeurProduit = new String[etalsVendeurProduit.length];
 		for (int i = 0; i < etalsVendeurProduit.length; i++) {
 			NomVendeurProduit[i] = etalsVendeurProduit[i].getVendeur().getNom();
@@ -30,6 +33,9 @@ public class ControlAcheterProduit {
 
 	public int trouverAcheterProduit(int nbProduit, String vendeur) {
 		Etal etal = controlTrouverEtalVendeur.trouverEtalVendeur(vendeur);
+		if (etal==null) {
+			return 0;
+		}
 		return etal.acheterProduit(nbProduit);
 	}
 }
